@@ -1,0 +1,72 @@
+# Modern RAG Application Dependencies
+# Optimized for offline deployment and 32GB RAM constraint
+
+# ==========================================
+# Core Framework
+# ==========================================
+fastapi>=0.100.0
+uvicorn[standard]>=0.22.0
+python-multipart>=0.0.6
+
+# ==========================================
+# Modern Document Processing & Embeddings
+# ==========================================
+sentence-transformers>=2.2.2    # Dense embeddings (CPU optimized)
+langchain>=0.0.350              # Modern text splitting strategies
+langchain-community>=0.0.20     # Additional text processing utilities
+
+# PDF Processing
+pymupdf>=1.23.0                 # Fast PDF text extraction
+unstructured[local-inference]>=0.10.0  # Complex layout processing
+pytesseract>=0.3.10             # OCR for scanned PDFs
+pillow>=10.0.0                  # Image processing
+
+# ==========================================
+# Vector Database (ChromaDB Primary)
+# ==========================================
+chromadb>=0.4.0                 # Lightweight embedded vector DB
+qdrant-client>=1.4.0            # Alternative for production scale
+
+# ==========================================
+# Async Operations & Performance
+# ==========================================
+aiofiles>=23.1.0                # Async file operations
+httpx>=0.24.1                   # Async HTTP client
+asyncio-throttle>=1.0.2         # Rate limiting for processing
+
+# ==========================================
+# Configuration & Validation
+# ==========================================
+pydantic>=2.0.0                 # Data validation and settings
+pydantic-settings>=2.0.0        # Environment-based configuration
+python-dotenv>=1.0.0            # Environment variable loading
+
+# ==========================================
+# Logging & Monitoring
+# ==========================================
+structlog>=23.1.0               # Structured logging
+rich>=13.4.0                    # Beautiful console output
+
+# ==========================================
+# Text Processing & NLP
+# ==========================================
+spacy>=3.6.0                    # Advanced NLP processing
+nltk>=3.8.1                     # Natural language toolkit
+
+# ==========================================
+# Development & Testing
+# ==========================================
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-mock>=3.11.0
+black>=23.7.0                   # Code formatting
+isort>=5.12.0                   # Import sorting
+mypy>=1.5.0                     # Type checking
+
+# ==========================================
+# Optional Dependencies for Advanced Features
+# ==========================================
+# transformers>=4.30.0          # Uncomment for custom transformer models
+# torch>=2.0.0                  # Uncomment if GPU acceleration available
+# redis>=4.5.0                  # Uncomment for caching layer
+# prometheus-client>=0.17.0      # Uncomment for monitoring
