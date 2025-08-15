@@ -191,7 +191,7 @@ class TestPDFProcessor:
         with patch('processing.pdf_processor.psutil.Process') as mock_process:
             mock_process.return_value.memory_info.return_value.rss = 1024 * 1024 * 2048  # 2GB (exceeds 1GB limit)
             
-            from core.exceptions import MemoryError as RAGMemoryError
+            from core.exceptions import RAGMemoryError
             with pytest.raises(RAGMemoryError) as exc_info:
                 pdf_processor._check_memory_usage()
             
@@ -582,7 +582,7 @@ class TestPerformance:
         with patch('processing.pdf_processor.psutil.Process') as mock_process:
             mock_process.return_value.memory_info.return_value.rss = 200 * 1024 * 1024  # 200MB
             
-            from core.exceptions import MemoryError as RAGMemoryError
+            from core.exceptions import RAGMemoryError
             with pytest.raises(RAGMemoryError):
                 processor._check_memory_usage()
 

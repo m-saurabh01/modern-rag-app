@@ -27,7 +27,7 @@ import numpy as np
 from core.exceptions import (
     PDFExtractionError,
     OCRProcessingError,
-    MemoryError as RAGMemoryError,
+    RAGMemoryError,
     ValidationError
 )
 from config.settings import get_settings

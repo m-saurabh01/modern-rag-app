@@ -6,6 +6,9 @@ from .document_analyzer import DocumentAnalyzer, DocumentStructure
 from .embedding_service import EmbeddingService
 from .text_processor import TextProcessor
 from .query_analyzer import QueryAnalyzer
+from .intelligent_retriever import IntelligentRetriever
+from .intelligent_summarizer import IntelligentSummarizer
+from .rag_orchestrator import RAGOrchestrator
 
 __all__ = [
     'ChunkingService',
@@ -14,5 +17,8 @@ __all__ = [
     'DocumentStructure',
     'EmbeddingService',
     'TextProcessor',
-    'QueryAnalyzer'
+    'QueryAnalyzer',
+    'IntelligentRetriever',
+    'IntelligentSummarizer',
+    'RAGOrchestrator'
 ]

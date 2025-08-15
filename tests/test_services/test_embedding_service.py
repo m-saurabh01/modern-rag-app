@@ -10,7 +10,7 @@ from unittest.mock import Mock, patch, MagicMock
 import time
 
 from services.embedding_service import EmbeddingService, get_embedding_service
-from core.exceptions import EmbeddingError, ModelLoadingError, MemoryError
+from core.exceptions import EmbeddingError, ModelLoadingError, RAGMemoryError
 
 
 class TestEmbeddingService:
@@ -85,7 +85,7 @@ class TestEmbeddingService:
         # Mock memory usage above limit (default is 24GB)
         mock_process.return_value.memory_info.return_value.rss = 30 * (1024**3)  # 30GB
         
-        with pytest.raises(MemoryError) as exc_info:
+        with pytest.raises(RAGMemoryError) as exc_info:
             embedding_service._check_memory_usage()
         
         assert "Memory usage" in str(exc_info.value)

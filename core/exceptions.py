@@ -52,7 +52,9 @@ class DocumentProcessingError(ModernRAGException):
         details = kwargs.get("details", {})
         if document_path:
             details["document_path"] = document_path
-        super().__init__(message, error_code="DOCUMENT_PROCESSING_ERROR", details=details, **kwargs)
+        # Remove conflicting kwargs to avoid duplicate arguments
+        clean_kwargs = {k: v for k, v in kwargs.items() if k not in ['error_code', 'details']}
+        super().__init__(message, error_code="DOCUMENT_PROCESSING_ERROR", details=details, **clean_kwargs)
 
 
 class PDFExtractionError(DocumentProcessingError):
@@ -64,11 +66,12 @@ class PDFExtractionError(DocumentProcessingError):
             "pdf_path": pdf_path,
             "page_number": page_number,
         })
+        # Remove conflicting kwargs to avoid duplicate arguments
+        clean_kwargs = {k: v for k, v in kwargs.items() if k not in ['error_code', 'details']}
         super().__init__(
             message, 
-            error_code="PDF_EXTRACTION_ERROR",
-            details=details,
-            **kwargs
+            document_path=pdf_path,
+            **clean_kwargs
         )
 
 
@@ -79,11 +82,11 @@ class OCRProcessingError(DocumentProcessingError):
         details = kwargs.get("details", {})
         if confidence_score is not None:
             details["ocr_confidence"] = confidence_score
+        # Remove conflicting kwargs to avoid duplicate arguments
+        clean_kwargs = {k: v for k, v in kwargs.items() if k not in ['error_code', 'details']}
         super().__init__(
             message,
-            error_code="OCR_PROCESSING_ERROR", 
-            details=details,
-            **kwargs
+            **clean_kwargs
         )
 
 
@@ -115,7 +118,9 @@ class EmbeddingError(ModernRAGException):
         details = kwargs.get("details", {})
         if model_name:
             details["embedding_model"] = model_name
-        super().__init__(message, error_code="EMBEDDING_ERROR", details=details, **kwargs)
+        # Remove details from kwargs to avoid duplicate parameter
+        kwargs_clean = {k: v for k, v in kwargs.items() if k != "details"}
+        super().__init__(message, error_code="EMBEDDING_ERROR", details=details, **kwargs_clean)
 
 
 class ModelLoadingError(EmbeddingError):
@@ -127,11 +132,13 @@ class ModelLoadingError(EmbeddingError):
             "model_name": model_name,
             "model_path": model_path,
         })
+        # Remove error_code from kwargs to avoid duplicate parameter
+        kwargs_clean = {k: v for k, v in kwargs.items() if k != "error_code"}
         super().__init__(
             message,
-            error_code="MODEL_LOADING_ERROR",
+            model_name=model_name,
             details=details,
-            **kwargs
+            **kwargs_clean
         )
 
 
@@ -342,27 +349,29 @@ class ResourceError(ModernRAGException):
     def __init__(self, message: str, resource_type: str, **kwargs):
         details = kwargs.get("details", {})
         details["resource_type"] = resource_type
+        # Remove conflicting kwargs to avoid duplicate arguments
+        clean_kwargs = {k: v for k, v in kwargs.items() if k not in ['error_code', 'details']}
         super().__init__(
             message,
             error_code="RESOURCE_ERROR",
             details=details,
-            **kwargs
+            **clean_kwargs
         )
 
 
-class MemoryError(ResourceError):
+class RAGMemoryError(ResourceError):
     """Memory-related errors."""
     
     def __init__(self, message: str, memory_usage_mb: Optional[float] = None, **kwargs):
         details = kwargs.get("details", {})
         if memory_usage_mb:
             details["memory_usage_mb"] = memory_usage_mb
+        # Remove conflicting kwargs to avoid duplicate arguments
+        clean_kwargs = {k: v for k, v in kwargs.items() if k not in ['error_code', 'details', 'resource_type']}
         super().__init__(
             message,
             resource_type="memory",
-            error_code="MEMORY_ERROR",
-            details=details,
-            **kwargs
+            **clean_kwargs
         )
 
 

@@ -10,6 +10,10 @@ Industry-standard RAG (Retrieval-Augmented Generation) application with modern e
 - Production-grade error handling and logging
 - Scalable document processing pipeline
 - Advanced RAG techniques
+- **Optional streaming responses** for real-time interaction
+- LLaMA integration with intelligent fallbacks
+- Multi-modal retrieval with adaptive weighting
+- ChromaDB and Qdrant vector store support
 
 ## Requirements
 - Python 3.9+
@@ -30,7 +34,32 @@ Industry-standard RAG (Retrieval-Augmented Generation) application with modern e
 ## Development Status
 🚧 **In Development** - Following industry-standard practices
 
-## Documentation
-- Configuration will be environment-based
-- API will follow OpenAPI standards
-- Processing pipeline will be async and scalable
+## Quick Start
+
+### Basic Setup
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Start API server
+python api/v1/endpoints.py
+
+# Access documentation
+http://localhost:8000/docs
+```
+
+### Testing Features
+```bash
+# Test standard responses
+curl -X POST "http://localhost:8000/ask" \
+     -H "Content-Type: application/json" \
+     -d '{"query": "What is the budget?", "mode": "balanced"}'
+
+# Test streaming responses (optional)
+curl -X POST "http://localhost:8000/ask/stream" \
+     -H "Content-Type: application/json" \
+     -d '{"query": "What is the budget?", "mode": "balanced"}'
+
+# Run streaming demo
+python demo_streaming.py
+```

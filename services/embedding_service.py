@@ -13,8 +13,9 @@ import threading
 from sentence_transformers import SentenceTransformer
 import torch
 
-from config import settings, get_logger, log_performance
-from core.exceptions import EmbeddingError, ModelLoadingError, MemoryError
+from config import settings
+from config.logging_config import get_logger, log_performance
+from core.exceptions import EmbeddingError, ModelLoadingError, RAGMemoryError
 
 
 class EmbeddingService:
@@ -104,7 +105,7 @@ class EmbeddingService:
         memory_gb = psutil.Process().memory_info().rss / (1024**3)
         
         if memory_gb > settings.processing.max_memory_gb:
-            raise MemoryError(
+            raise RAGMemoryError(
                 f"Memory usage {memory_gb:.2f}GB exceeds limit {settings.processing.max_memory_gb}GB",
                 memory_usage_mb=memory_gb * 1024
             )
